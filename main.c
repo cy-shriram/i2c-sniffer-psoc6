@@ -42,7 +42,7 @@
 #include "cy_pdl.h"
 #include "cyhal.h"
 #include "cybsp.h"
-#include "cy_retarget_io.h"
+//#include "cy_retarget_io.h"
 
 #define SDA_pin (P13_0)
 #define SCL_pin (P13_1)
@@ -66,10 +66,36 @@
 #define UART_BAUDRATE		(UART_BAUDRATE0)
 
 uint8_t buffer [256] = "";
-uint8_t *buffer_ptr;
+uint8_t *buffer_ptr, *print_ptr;
 
 uint8_t output [256] = "";
 uint8_t *out_ptr;
+
+cyhal_uart_t cy_retarget_io_uart_obj;
+
+
+cy_rslt_t cy_retarget_io_init1(cyhal_gpio_t tx, cyhal_gpio_t rx, uint32_t baudrate)
+{
+    const cyhal_uart_cfg_t uart_config =
+    {
+        .data_bits = 8,
+        .stop_bits = 1,
+        .parity = CYHAL_UART_PARITY_NONE,
+        .rx_buffer = NULL,
+        .rx_buffer_size = 0,
+    };
+
+    cy_rslt_t result = cyhal_uart_init(&cy_retarget_io_uart_obj, tx, rx, NULL, &uart_config);
+
+    if (result == CY_RSLT_SUCCESS)
+    {
+        result = cyhal_uart_set_baud(&cy_retarget_io_uart_obj, baudrate, NULL);
+    }
+
+    return result;
+}
+
+
 
 void I2C_Read ()
 {
@@ -85,7 +111,19 @@ void I2C_Read ()
 
     // Looking for START condition. Ie SDA transitioning from 
     // high to low while SLC is high.
-    while ( (GPIO_PRT_IN(SDA_port) & SDA_HIGH_SCL_HIGH) != SDA_LOW_SCL_HIGH) ;
+    while ( (GPIO_PRT_IN(SDA_port) & SDA_HIGH_SCL_HIGH) != SDA_LOW_SCL_HIGH)
+    {
+    	// Both are high
+    	if (print_ptr < buffer_ptr)
+    	{
+    		cyhal_uart_putc(&cy_retarget_io_uart_obj, *(print_ptr ++));
+    	}
+    	else
+    	{
+    		buffer_ptr = &buffer;
+    		print_ptr = &buffer;
+    	}
+    }
     *(buffer_ptr ++) = 'S';
 
     // wait for SCL low
@@ -114,6 +152,8 @@ void I2C_Read ()
                 if ( ((GPIO_PRT_IN(SDA_port) & SDA_HIGH_SCL_LOW)) != 0) {
                     // detected STOP condition
                     *(buffer_ptr - 1) = 'H';
+                    *(buffer_ptr ++) = '\r';
+                    *(buffer_ptr ++) = '\n';
                     //buffer_ptr ++;
                     done = true; 
                 }
@@ -148,6 +188,7 @@ int main(void)
     cy_rslt_t result;
 
     buffer_ptr = &buffer;
+    print_ptr = &buffer;
 
     /* Initialize the device and board peripherals */
     result = cybsp_init() ;
@@ -157,7 +198,7 @@ int main(void)
     }
 
     /* Initialize retargeting standard IO to the debug UART port */
-    cy_retarget_io_init(CYBSP_DEBUG_UART_TX, CYBSP_DEBUG_UART_RX, UART_BAUDRATE);
+    cy_retarget_io_init1(CYBSP_DEBUG_UART_TX, CYBSP_DEBUG_UART_RX, UART_BAUDRATE);
 
     printf("\r\nI2C Sniffer!!\r\n");
 
@@ -173,7 +214,7 @@ int main(void)
     for(;;)
     {
         I2C_Read();
-        I2C_Process();
+        //I2C_Process();
     }
 }
 
