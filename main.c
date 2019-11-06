@@ -58,6 +58,12 @@
 #define SDA_LOW_SCL_LOW     (0b00000000)
 #define SDA_LOW_SCL_HIGH    (0b00000010)
 
+#define UART_BAUDRATE0		(115200)
+#define UART_BAUDRATE1		(230400)
+#define UART_BAUDRATE2		(460800)
+#define UART_BAUDRATE3		(921600)
+
+#define UART_BAUDRATE		(UART_BAUDRATE0)
 
 uint8_t buffer [256] = "";
 uint8_t *buffer_ptr;
@@ -151,8 +157,7 @@ int main(void)
     }
 
     /* Initialize retargeting standard IO to the debug UART port */
-    cy_retarget_io_init(CYBSP_DEBUG_UART_TX, CYBSP_DEBUG_UART_RX, 
-                        CY_RETARGET_IO_BAUDRATE);
+    cy_retarget_io_init(CYBSP_DEBUG_UART_TX, CYBSP_DEBUG_UART_RX, UART_BAUDRATE);
 
     printf("\r\nI2C Sniffer!!\r\n");
 
