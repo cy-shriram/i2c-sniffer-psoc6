@@ -29,8 +29,7 @@
 ################################################################################
 
 # Target board/hardware
-TARGET=CY8CPROTO-062-4343W
-
+TARGET=CY8CKIT-062-BLE
 # Name of application (used to derive name of final linked file).
 APPNAME=mtb-example-psoc6-empty-app
 
