@@ -152,6 +152,7 @@ void I2C_Read ()
                 if ( ((GPIO_PRT_IN(SDA_port) & SDA_HIGH_SCL_LOW)) != 0) {
                     // detected STOP condition
                     *(buffer_ptr - 1) = 'H';
+                    *(buffer_ptr ++) = ';';
                     *(buffer_ptr ++) = '\r';
                     *(buffer_ptr ++) = '\n';
                     //buffer_ptr ++;
@@ -203,10 +204,10 @@ int main(void)
     printf("\r\nI2C Sniffer!!\r\n");
 
     cyhal_gpio_init((cyhal_gpio_t) SDA_pin, CYHAL_GPIO_DIR_INPUT,
-                    CYHAL_GPIO_DRIVE_NONE, 1U);
+    		CYHAL_GPIO_DRIVE_PULLUP, 1U);
 
     cyhal_gpio_init((cyhal_gpio_t)SCL_pin, CYHAL_GPIO_DIR_INPUT,
-                    CYHAL_GPIO_DRIVE_NONE, 1U);
+    		CYHAL_GPIO_DRIVE_PULLUP, 1U);
 
     __enable_irq();
 

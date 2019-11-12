@@ -1,0 +1,29 @@
+[33mcommit 3c0e8c84d02f046fa55fbbbdd6f6045f66df5e82[m[33m ([m[1;36mHEAD[m[33m)[m
+Author: Shriram M <smrx@cypress.com>
+Date:   Wed Nov 6 15:18:58 2019 +0530
+
+    Changed UART print - works for the test case
+
+[33mcommit 12377201bf3effec9a2cdee49f82ab8f24d13a0b[m
+Author: Shriram M <smrx@cypress.com>
+Date:   Wed Nov 6 14:47:12 2019 +0530
+
+    Tried with different baud rates. 115200 is the max that works
+
+[33mcommit b3ec9a4152561111526f963a61e45edfe4f4582d[m
+Author: Shriram M <smrx@cypress.com>
+Date:   Wed Nov 6 10:11:16 2019 +0530
+
+    Initial commit
+
+[33mcommit 7342431701700edfa4df20487ac7bd43afaf4ced[m[33m ([m[1;33mtag: release-v1.0.0[m[33m, [m[1;33mtag: latest-v1.X[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Author: gitlab-runner <do-not-reply@cypress.com>
+Date:   Wed Oct 16 12:07:44 2019 -0500
+
+    Upload mtb-example-psoc6-empty-app 1.0.0.11
+
+[33mcommit 4438e9f4c02cd006e2a391b5b565e15cfd230f2c[m
+Author: Jim Trudeau <12550775+JimTrudeau@users.noreply.github.com>
+Date:   Fri Oct 4 15:10:11 2019 +0200
+
+    Initial commit
