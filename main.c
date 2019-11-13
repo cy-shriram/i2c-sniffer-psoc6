@@ -68,9 +68,6 @@
 uint8_t buffer [256] = "";
 uint8_t *buffer_ptr, *print_ptr;
 
-uint8_t output [256] = "";
-uint8_t *out_ptr;
-
 cyhal_uart_t cy_retarget_io_uart_obj;
 
 
@@ -103,8 +100,6 @@ void I2C_Read ()
     uint8_t s;
     bool done = false;
 
-    lookForStart:
-
     // Expect both SCL and SDA to be high
     while ( (GPIO_PRT_IN(SDA_port) & SDA_HIGH_SCL_HIGH) != SDA_HIGH_SCL_HIGH) ;
     // both SLC and SDA high at this point
@@ -128,8 +123,6 @@ void I2C_Read ()
 
     // wait for SCL low
     while ( ((GPIO_PRT_IN(SDA_port) & SDA_LOW_SCL_HIGH)) != 0) ;
-
-    lookForData:
 
     while (!done) {
 
@@ -161,16 +154,6 @@ void I2C_Read ()
             }
         } 
     } 
-}
-
-void I2C_Process()
-{
-    if ((buffer_ptr - buffer) > 0u)
-   	{
-        *(buffer_ptr) = '\0';
-		printf("Data = %s\r\n", buffer);
-        buffer_ptr = buffer;
-    }
 }
 
 int main(void)
