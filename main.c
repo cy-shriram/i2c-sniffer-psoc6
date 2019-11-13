@@ -193,10 +193,10 @@ int main(void)
     printf("\r\nI2C Sniffer!!\r\n");
 
     cyhal_gpio_init((cyhal_gpio_t) SDA_pin, CYHAL_GPIO_DIR_INPUT,
-    		CYHAL_GPIO_DRIVE_PULLUP, 1U);
+    		CYHAL_GPIO_DRIVE_PULLUP, 1U); // Pull up for SDA
 
     cyhal_gpio_init((cyhal_gpio_t)SCL_pin, CYHAL_GPIO_DIR_INPUT,
-    		CYHAL_GPIO_DRIVE_PULLUP, 1U);
+    		CYHAL_GPIO_DRIVE_PULLUP, 1U); // Pull up for SCL
 
     __enable_irq();
 
