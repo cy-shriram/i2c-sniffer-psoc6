@@ -1,0 +1,21 @@
+# Ignore uncrustify backups
+*.unc*
+doc/html/*
+doc/output/*
+doc/tag/*
+/.metadata/
+.vscode/*
+*.o
+*.d 
+*.elf
+*.hex
+*.bin
+
+RemoteSystemsTempFiles/*
+
+
+codegentemp*/
+CortexM0p*/
+CortexM4*/
+Generated_Source*/
+
