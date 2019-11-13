@@ -31,7 +31,7 @@
 # Target board/hardware
 TARGET=CY8CKIT-062-BLE
 # Name of application (used to derive name of final linked file).
-APPNAME=mtb-example-psoc6-empty-app
+APPNAME=i2c-sniffer-psoc6
 
 # Name of toolchain to use. Options include:
 #
